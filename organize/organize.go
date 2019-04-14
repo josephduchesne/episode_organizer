@@ -55,7 +55,7 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 	}
 
 	// "." and "_" are spaces, and ToTitle makes each word upper-case-first
-	e.Series = strings.TrimSpace(strings.Title(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(res[1], ".", " "),"_"," "))))
+	e.Series = strings.TrimSpace(strings.Title(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(res[1], ".", " "), "_", " "))))
 	e.Season = res[2]
 
 	// Handle episode alises
