@@ -18,7 +18,7 @@ type Episode struct {
 }
 
 // MoveEpisode to the destination subfolder, if it exists
-func MoveEpisode(episode Episode, dest string) {
+func MoveEpisode(episode Episode, dest string) error {
 	r := strings.NewReplacer("{Series}", episode.Series,
 		"{Season}", episode.Season,
 		"{Filename}", episode.Filename)
@@ -29,12 +29,15 @@ func MoveEpisode(episode Episode, dest string) {
 		err := os.Rename(episode.Path, destPath)
 		if err != nil {
 			log.Printf("Failed to move %s to %s: %v\n", episode.Path, destPath, err)
+			return err
 		} else {
 			log.Printf("Moved %s to %s\n", episode.Path, destPath)
 		}
 	} else {
 		log.Printf("No destination found for %s\n", destDir)
+		return errors.New("MoveEpisode dest not found!")
 	}
+	return nil
 }
 
 // ParseEpisode turns file path into an Episode struct, or fails and returns an error
