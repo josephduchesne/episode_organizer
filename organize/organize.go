@@ -84,7 +84,7 @@ func GetVideoFiles(folder string, minSize int64, extensions []string) []string {
 						return nil // Done processing this file
 					}
 				}
-				log.Println("Unknown possible video format: %s", path)
+				log.Printf("Unknown possible video format: %s\n", path)
 			}
 			return nil
 		})
