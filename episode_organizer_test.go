@@ -42,7 +42,7 @@ func TestMain(t *testing.T) {
 	}
 
 	// Check the results (with optional update flag)
-	actual, err := exec.Command("find", "testdata/tmp_input", "testdata/tmp_output").CombinedOutput()
+	actual, err := exec.Command("sh", "-c", "find testdata/tmp_input testdata/tmp_output | sort").CombinedOutput()
 	if err != nil {
 		log.Printf("Error inspecting test output: %v\n\t%s\n", err, actual)
 		t.Fail()
