@@ -54,8 +54,8 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 		return e, errors.New("Failed to find episode name and season")
 	}
 
-	// "." is space, and ToTitle makes each word upper-case-first
-	e.Series = strings.TrimSpace(strings.Title(strings.ToLower(strings.ReplaceAll(res[1], ".", " "))))
+	// "." and "_" are spaces, and ToTitle makes each word upper-case-first
+	e.Series = strings.TrimSpace(strings.Title(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(res[1], ".", " "),"_"," "))))
 	e.Season = res[2]
 
 	// Handle episode alises
@@ -75,7 +75,7 @@ func GetVideoFiles(folder string, minSize int64, extensions []string) []string {
 			if err != nil {
 				return err
 			}
-			if info.Size() >= minSize {
+			if info.Size() >= minSize && !info.IsDir() {
 				//fmt.Println(path, info.Size())
 				for _, extension := range extensions {
 					if strings.HasSuffix(path, extension) {

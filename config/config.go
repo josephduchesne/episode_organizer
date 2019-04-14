@@ -17,8 +17,8 @@ type Config struct {
 }
 
 // GetConfig loads config.yaml into the Config data structure
-func (c *Config) GetConfig() *Config {
-	yamlFile, err := ioutil.ReadFile("config.yaml")
+func (c *Config) GetConfig(path string) *Config {
+	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
 	}

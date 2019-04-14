@@ -8,7 +8,7 @@ import (
 
 func main() {
 	var c config.Config
-	c.GetConfig()
+	c.GetConfig("config.yaml")
 
 	log.Printf("Config: %+v\n\n", c)
 
