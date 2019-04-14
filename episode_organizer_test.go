@@ -55,6 +55,8 @@ func TestMain(t *testing.T) {
 
 	if !bytes.Equal(actual, expected) {
 		log.Println("Output was not what we expected! Please see the resulting directory structure.")
+        log.Printf("Expected:\n%s\n\n", expected)
+        log.Printf("Actual:\n%s\n\n", actual)
 		t.Fail()
 	}
 }

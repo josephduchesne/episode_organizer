@@ -3,7 +3,6 @@ package config_test
 import (
 	"fmt"
 	"github.com/josephduchesne/episode_organizer/config"
-	"os"
 	"reflect"
 	"testing"
 )
