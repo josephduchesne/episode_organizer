@@ -9,33 +9,35 @@ import (
 	"strings"
 )
 
+// Episode stores extracted episode filename metadata
 type Episode struct {
-	Path     string
-	Filename string
-	Series   string
-	Season   string
+	Path     string  // The full path to the video file
+	Filename string  // The filename
+	Series   string  // The name of the show
+	Season   string  // The season as a non-zero padded string
 }
 
-// Move episode to the destination subfolder, if it exists
+// MoveEpisode to the destination subfolder, if it exists
 func MoveEpisode(episode Episode, dest string) {
 	r := strings.NewReplacer("{Series}", episode.Series,
 		"{Season}", episode.Season,
 		"{Filename}", episode.Filename)
-	dest_path := r.Replace(dest)
-	dest_dir := filepath.Dir(dest_path)
+	destPath := r.Replace(dest)
+	destDir := filepath.Dir(destPath)
 
-	if _, err := os.Stat(dest_dir); !os.IsNotExist(err) {
-		err := os.Rename(episode.Path, dest_path)
+	if _, err := os.Stat(destDir); !os.IsNotExist(err) {
+		err := os.Rename(episode.Path, destPath)
 		if err != nil {
-			log.Printf("Failed to move %s to %s: %v\n", episode.Path, dest_path, err)
+			log.Printf("Failed to move %s to %s: %v\n", episode.Path, destPath, err)
 		} else {
-			log.Printf("Moved %s to %s\n", episode.Path, dest_path)
+			log.Printf("Moved %s to %s\n", episode.Path, destPath)
 		}
 	} else {
-		log.Printf("No destination found for %s\n", dest_dir)
+		log.Printf("No destination found for %s\n", destDir)
 	}
 }
 
+// ParseEpisode turns file path into an Episode struct, or fails and returns an error
 func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 	var e Episode
 	var err error
@@ -65,20 +67,20 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 	return e, err
 }
 
-// Find all video files that meet the min-size and extension criteria
-func GetVideoFiles(folder string, min_size int64, extensions []string) []string {
-	var video_files []string
+// GetVideoFiles finds all video files that meet the min-size and extension criteria
+func GetVideoFiles(folder string, minSize int64, extensions []string) []string {
+	var videoFiles []string
 	err := filepath.Walk(folder,
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
-			if info.Size() >= min_size {
+			if info.Size() >= minSize {
 				//fmt.Println(path, info.Size())
 				for _, extension := range extensions {
 					if strings.HasSuffix(path, extension) {
 						// Record file path for later return
-						video_files = append(video_files, path)
+						videoFiles = append(videoFiles, path)
 						return nil // Done processing this file
 					}
 				}
@@ -89,5 +91,5 @@ func GetVideoFiles(folder string, min_size int64, extensions []string) []string 
 	if err != nil {
 		log.Println(err)
 	}
-	return video_files
+	return videoFiles
 }
