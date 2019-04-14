@@ -1,6 +1,6 @@
 # What is this?
 
-This can be run targetting a download folder containing TV show episodes.
+This is a small tool to make TV show episode organization easier without risking really messing up your directory structure, file names, or other things.
 
 It will find all files above a specified size that has specified extensions and move them to a specified destination folder, organized by Series name and Episode.
 
