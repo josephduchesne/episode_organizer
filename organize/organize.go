@@ -48,10 +48,7 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 	e.Filename = filepath.Base(path)
 
 	// Pull out episode name and season (stripping off leading zeros)
-	r, err := regexp.Compile(`(.+)[sS]0*([\d]+)[eE][\d]+.+`)
-	if err != nil {
-		return e, err
-	}
+	r := regexp.MustCompile(`(.+)[sS]0*([\d]+)[eE][\d]+.+`)
 	res := r.FindStringSubmatch(e.Filename)
 	if len(res) != 3 {
 		return e, errors.New("Failed to find episode name and season")
