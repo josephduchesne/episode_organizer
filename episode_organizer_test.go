@@ -1,15 +1,15 @@
 package main
 
 import (
+	"bytes"
+	"flag"
 	"github.com/josephduchesne/episode_organizer/config"
 	"github.com/josephduchesne/episode_organizer/organize"
+	"io/ioutil"
 	"log"
-    "testing"
-    "os/exec"
-    "flag"
-    "io/ioutil"
-    "path/filepath"
-    "bytes"
+	"os/exec"
+	"path/filepath"
+	"testing"
 )
 
 // To update the test's expected output, run `go test -update`
@@ -19,17 +19,17 @@ var update = flag.Bool("update", false, "update .golden files")
 // It copies intput/output directories in testdata to tmp_input/tmp_output, runs
 // and then comapres the result
 func TestMain(t *testing.T) {
-    // End-to-end functional test of the main program
+	// End-to-end functional test of the main program
 	var c config.Config
 	c.GetConfig("testdata/config.yaml")
 
 	log.Printf("Config: %+v\n\n", c)
 
-    // reset test
-    exec.Command("rm", "-rf","testdata/tmp_input", "testdata/tmp_output").Run()  // Clear old data
-    // Then copy in the new test data
-    exec.Command("cp", "-a","testdata/input/", "testdata/tmp_input").Run()
-    exec.Command("cp", "-a","testdata/output/", "testdata/tmp_output").Run()
+	// reset test
+	exec.Command("rm", "-rf", "testdata/tmp_input", "testdata/tmp_output").Run() // Clear old data
+	// Then copy in the new test data
+	exec.Command("cp", "-a", "testdata/input/", "testdata/tmp_input").Run()
+	exec.Command("cp", "-a", "testdata/output/", "testdata/tmp_output").Run()
 
 	videoFiles := organize.GetVideoFiles(c.Source, c.MinSize, c.Extensions)
 	for _, file := range videoFiles {
@@ -41,20 +41,20 @@ func TestMain(t *testing.T) {
 		}
 	}
 
-    // Check the results (with optional update flag)
-    actual,err := exec.Command("find", "testdata/tmp_input", "testdata/tmp_output").CombinedOutput()
-    if err !=nil {
-        log.Printf("Error inspecting test output: %v\n\t%s\n", err, actual)
-        t.Fail()
-    }
-    golden := filepath.Join("testdata", t.Name() + ".golden")
-    if *update {
-        ioutil.WriteFile(golden, actual, 0644)
-    }
-    expected, _ := ioutil.ReadFile(golden)
+	// Check the results (with optional update flag)
+	actual, err := exec.Command("find", "testdata/tmp_input", "testdata/tmp_output").CombinedOutput()
+	if err != nil {
+		log.Printf("Error inspecting test output: %v\n\t%s\n", err, actual)
+		t.Fail()
+	}
+	golden := filepath.Join("testdata", t.Name()+".golden")
+	if *update {
+		ioutil.WriteFile(golden, actual, 0644)
+	}
+	expected, _ := ioutil.ReadFile(golden)
 
-    if !bytes.Equal(actual, expected) {
-        log.Println("Output was not what we expected! Please see the resulting directory structure.")
-        t.Fail()
-    }
+	if !bytes.Equal(actual, expected) {
+		log.Println("Output was not what we expected! Please see the resulting directory structure.")
+		t.Fail()
+	}
 }
