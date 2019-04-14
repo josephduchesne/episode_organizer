@@ -11,10 +11,10 @@ import (
 
 // Episode stores extracted episode filename metadata
 type Episode struct {
-	Path     string  // The full path to the video file
-	Filename string  // The filename
-	Series   string  // The name of the show
-	Season   string  // The season as a non-zero padded string
+	Path     string // The full path to the video file
+	Filename string // The filename
+	Series   string // The name of the show
+	Season   string // The season as a non-zero padded string
 }
 
 // MoveEpisode to the destination subfolder, if it exists
