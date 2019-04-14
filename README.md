@@ -15,6 +15,6 @@ This program expects that the series and season folders will exist already. It w
 - [Install Go](https://golang.org/doc/install)
 - `go get github.com/josephduchesne/episode_organizer`
 - `go build github.com/josephduchesne/episode_organizer`
-- `wget https://raw.githubusercontent.com/josephduchesne/episode_organizer/master/config.yaml.dist -O config.yaml
+- `wget https://raw.githubusercontent.com/josephduchesne/episode_organizer/master/config.yaml.dist -O config.yaml`
 - Edit config.yaml
 - Run with `./episode_organizer`
