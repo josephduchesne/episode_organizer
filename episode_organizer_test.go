@@ -17,7 +17,7 @@ var update = flag.Bool("update", false, "update .golden files")
 
 // TestMain is an end-to-end test that validates general functionality of episode_organizer
 // It copies intput/output directories in testdata to tmp_input/tmp_output, runs
-// and then comapres the result
+// and then compares the result
 func TestMain(t *testing.T) {
 	// End-to-end functional test of the main program
 	var c config.Config
