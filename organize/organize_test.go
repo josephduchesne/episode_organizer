@@ -1,9 +1,8 @@
-package main
+package organize_test
 
 import (
 	"bytes"
 	"flag"
-	"github.com/josephduchesne/episode_organizer/config"
 	"github.com/josephduchesne/episode_organizer/organize"
 	"io/ioutil"
 	"log"
@@ -20,26 +19,14 @@ var update = flag.Bool("update", false, "update .golden files")
 // and then compares the result
 func TestMain(t *testing.T) {
 	// End-to-end functional test of the main program
-	var c config.Config
-	c.GetConfig("testdata/config.yaml")
 
-	log.Printf("Config: %+v\n\n", c)
-
-	// reset test
+	// reset test and copy in new test data
 	exec.Command("rm", "-rf", "testdata/tmp_input", "testdata/tmp_output").Run() // Clear old data
-	// Then copy in the new test data
 	exec.Command("cp", "-a", "testdata/input/", "testdata/tmp_input").Run()
 	exec.Command("cp", "-a", "testdata/output/", "testdata/tmp_output").Run()
 
-	videoFiles := organize.GetVideoFiles(c.Source, c.MinSize, c.Extensions)
-	for _, file := range videoFiles {
-		episode, err := organize.ParseEpisode(file, c.Aliases)
-		if err != nil {
-			log.Printf("Error parsing episode %s: %v", file, err)
-		} else {
-			organize.MoveEpisode(episode, c.Dest)
-		}
-	}
+	// Run the main program
+	organize.Episodes("testdata/config.yaml")
 
 	// Check the results (with optional update flag)
 	actual, err := exec.Command("sh", "-c", "find testdata/tmp_input testdata/tmp_output | sort").CombinedOutput()
@@ -55,8 +42,8 @@ func TestMain(t *testing.T) {
 
 	if !bytes.Equal(actual, expected) {
 		log.Println("Output was not what we expected! Please see the resulting directory structure.")
-        log.Printf("Expected:\n%s\n\n", expected)
-        log.Printf("Actual:\n%s\n\n", actual)
+		log.Printf("Expected:\n%s\n\n", expected)
+		log.Printf("Actual:\n%s\n\n", actual)
 		t.Fail()
 	}
 }
