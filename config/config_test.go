@@ -10,9 +10,6 @@ import (
 
 // TestConfig is the GetConfig Config loading unit test
 func TestGetConfig(t *testing.T) {
-	dir, _ := os.Getwd()
-	fmt.Println(dir)
-
 	var input config.Config
 	input.GetConfig("testdata/config.yaml")
 
