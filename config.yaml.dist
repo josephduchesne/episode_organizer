@@ -1,0 +1,9 @@
+source: /home/user/Downloads/
+extensions:
+  - mkv
+  - mp4
+  - avi
+aliases:
+  "A TV Show With A Very Long Name": "Short Name"
+dest: /home/user/Videos/TV/{Series}/Season {Season}/{Filename}
+min_size: 10485760  # Video files must be >10MB
