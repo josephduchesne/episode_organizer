@@ -68,7 +68,7 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 }
 
 // GetVideoFiles finds all video files that meet the min-size and extension criteria
-func GetVideoFiles(folder string, minSize int64, extensions []string) []string {
+func GetVideoFiles(folder string, minSize int64, extensions []string) ([]string, error) {
 	var videoFiles []string
 	err := filepath.Walk(folder,
 		func(path string, info os.FileInfo, err error) error {
@@ -91,5 +91,5 @@ func GetVideoFiles(folder string, minSize int64, extensions []string) []string {
 	if err != nil {
 		log.Println(err)
 	}
-	return videoFiles
+	return videoFiles, err
 }

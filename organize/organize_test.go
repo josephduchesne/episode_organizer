@@ -80,3 +80,12 @@ func TestNoDest(t *testing.T) {
 		t.Fail()
 	}
 }
+
+// TestBadSourceFolder tests that errors are handled properly when the source folder is invalid
+func TestBadSourceFolder(t *testing.T) {
+	_, err := organize.GetVideoFiles("/dev/null/fake", 0, []string{"foo"})
+	if err == nil {
+		log.Println("GetVideoFiles should have an error")
+		t.Fail()
+	}
+}

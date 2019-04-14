@@ -16,7 +16,12 @@ func Episodes(configFile string) error {
 
 	log.Printf("Config: %+v\n\n", c)
 
-	videoFiles := GetVideoFiles(c.Source, c.MinSize, c.Extensions)
+	videoFiles, videoFileError := GetVideoFiles(c.Source, c.MinSize, c.Extensions)
+
+	if videoFileError != nil {
+		return videoFileError
+	}
+
 	for _, file := range videoFiles {
 		episode, err := ParseEpisode(file, c.Aliases)
 		if err != nil {
