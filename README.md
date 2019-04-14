@@ -4,7 +4,7 @@ This is a small tool to make TV show episode organization easier without risking
 
 It will find all files above a specified size that has specified extensions and move them to a specified destination folder, organized by Series name and Episode.
 
-The main design principle is to do nothing if anything is unexpected. 
+The main design principle is to do nothing if anything not exactly as expected. 
 
 The means that if something isn't handled properly, you can ammend the program or configuration to resolve the issue and rerun the program.
 
