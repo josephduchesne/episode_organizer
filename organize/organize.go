@@ -6,6 +6,7 @@ import (
     "strings"
     "path/filepath"
     "regexp"
+    "errors"
 )
 
 type Episode struct {
@@ -42,8 +43,14 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
     e.Filename = filepath.Base(path)
 
     // Pull out episode name and season (stripping off leading zeros)
-    r := regexp.MustCompile(`(.+)\.[sS]0*([\d]+)[eE][\d]+\..+`)
+    r, err := regexp.Compile(`(.+)[sS]0*([\d]+)[eE][\d]+.+`)
+    if err != nil {
+        return e,err
+    }
     res := r.FindStringSubmatch(e.Filename)
+    if len(res) != 3 {
+        return e,errors.New("Failed to find episode name and season")
+    }
 
     // "." is space, and ToTitle makes each word upper-case-first
     e.Series = strings.Title(strings.ToLower(strings.ReplaceAll(res[1], ".", " ")))
