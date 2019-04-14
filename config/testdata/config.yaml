@@ -1,0 +1,9 @@
+source: /some/source
+extensions:
+    - "A"
+    - "B"
+aliases:
+  "Foo": "Bar"
+  "Baz": "Bash"
+dest: /some/dest
+min_size: 123
