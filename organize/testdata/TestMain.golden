@@ -1,4 +1,5 @@
 testdata/tmp_input
+testdata/tmp_input/BadExtension.mov
 testdata/tmp_input/many
 testdata/tmp_input/many/sub
 testdata/tmp_input/many/sub/dirs
