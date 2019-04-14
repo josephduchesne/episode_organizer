@@ -3,12 +3,16 @@ package config_test
 import (
 	"fmt"
 	"github.com/josephduchesne/episode_organizer/config"
+	"os"
 	"reflect"
 	"testing"
 )
 
 // TestConfig is the GetConfig Config loading unit test
 func TestGetConfig(t *testing.T) {
+	dir, _ := os.Getwd()
+	fmt.Println(dir)
+
 	var input config.Config
 	input.GetConfig("testdata/config.yaml")
 
