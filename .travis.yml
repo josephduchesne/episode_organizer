@@ -7,6 +7,6 @@ before_install:
     - go get github.com/mattn/goveralls
 script:
     - go test ./config -v -covermode=count -coverprofile=config.cov
-    - go test ./organize -v -covermode=count -coverprofile=config.cov
-    - gocovmerge `ls *.coverprofile` > merged.coverprofile
+    - go test ./organize -v -covermode=count -coverprofile=organize.cov
+    - gocovmerge `ls *.cov` > merged.coverprofile
     - $GOPATH/bin/goveralls  -coverprofile merged.coverprofile -service=travis-ci
