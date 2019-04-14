@@ -31,19 +31,17 @@ func TestGetConfig(t *testing.T) {
 // config file is loaded
 func TestMissingConfig(t *testing.T) {
 	var input config.Config
-    err := input.GetConfig("testdata/missing_config.yaml")
-    if err == nil {
-        t.Fail()
-    }
+	err := input.GetConfig("testdata/missing_config.yaml")
+	if err == nil {
+		t.Fail()
+	}
 }
 
 // TestBadConfig tests that if a config is invalid, it errors
 func TestBadConfig(t *testing.T) {
 	var input config.Config
-    err := input.GetConfig("testdata/invalid_config.yaml")
-    if err == nil {
-        t.Fail()
-    }
+	err := input.GetConfig("testdata/invalid_config.yaml")
+	if err == nil {
+		t.Fail()
+	}
 }
-
-

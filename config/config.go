@@ -21,12 +21,12 @@ func (c *Config) GetConfig(path string) error {
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Printf("yamlFile.Get err %v\n", err)
-        return err
+		return err
 	}
 	err = yaml.Unmarshal(yamlFile, c)
 	if err != nil {
-        log.Printf("Invalid config file! %s\nError: %v\n", path, err)
-        return err
+		log.Printf("Invalid config file! %s\nError: %v\n", path, err)
+		return err
 	}
 
 	return nil

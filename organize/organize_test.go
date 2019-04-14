@@ -47,3 +47,12 @@ func TestMain(t *testing.T) {
 		t.Fail()
 	}
 }
+
+// TestMainFailConfig checks the case where config fails to load
+func TestMainFailConfig(t *testing.T) {
+	err := organize.Episodes("testdata/invalid_config.yaml")
+	if err == nil {
+		log.Println("Config load should have errored")
+		t.Fail()
+	}
+}
