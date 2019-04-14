@@ -89,3 +89,12 @@ func TestBadSourceFolder(t *testing.T) {
 		t.Fail()
 	}
 }
+
+// TestBadSourceConfig tests error handling for a bad source file in a configuration
+func TestBadSourceConfig(t *testing.T) {
+	err := organize.Episodes("testdata/config_bad_source.yaml")
+	if err == nil {
+		log.Println("Episode organization should have failed with a bad source dir")
+		t.Fail()
+	}
+}

@@ -1,0 +1,9 @@
+source: /dev/null/fake
+extensions:
+  - mkv
+  - mp4
+  - avi
+aliases:
+    "Alias": "Real"
+dest: testdata/tmp_output/{Series}/Season {Season}/{Filename}
+min_size: 1  # Video files must be 1 byte
