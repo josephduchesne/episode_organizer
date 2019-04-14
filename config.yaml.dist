@@ -1,9 +1,9 @@
-source: /home/user/Downloads/
-extensions:
+source: /home/user/Downloads/  # The source folder for video files (recursive)
+extensions:  # A list of valid video file extensions
   - mkv
   - mp4
   - avi
-aliases:
-  "A TV Show With A Very Long Name": "Short Name"
-dest: /home/user/Videos/TV/{Series}/Season {Season}/{Filename}
-min_size: 10485760  # Video files must be >10MB
+min_size: 10485760  # Video files must be >= this many bytes
+aliases:  # A map translating TV show names into their canonical version (found in the output folder)
+  "A TV Show With A Very Long Name": "Short Name"  # input: output
+dest: /home/user/Videos/TV/{Series}/Season {Season}/{Filename}  # The destination folder structure
