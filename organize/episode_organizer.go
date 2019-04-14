@@ -7,9 +7,12 @@ import (
 
 // Episodes is the main program that loads config.yaml,
 // finds video files and moves them into target folders
-func Episodes(configFile string) {
+func Episodes(configFile string) error {
 	var c config.Config
-	c.GetConfig(configFile)
+    configError := c.GetConfig(configFile)
+    if configError != nil {
+        return configError
+    }
 
 	log.Printf("Config: %+v\n\n", c)
 
@@ -22,4 +25,5 @@ func Episodes(configFile string) {
 			MoveEpisode(episode, c.Dest)
 		}
 	}
+    return nil
 }
