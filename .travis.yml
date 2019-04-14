@@ -2,5 +2,7 @@ language: go
 
 go:
     - "1.12.4"
+before_install:
+    - go get github.com/mattn/goveralls
 script:
-        - go test github.com/josephduchesne/episode_organizer/organize github.com/josephduchesne/episode_organizer/config
+    - $GOPATH/bin/goveralls -service=travis-ci
