@@ -18,3 +18,6 @@ This program expects that the series and season folders will exist already. It w
 - Create a config file `wget https://raw.githubusercontent.com/josephduchesne/episode_organizer/master/config.yaml.dist -O config.yaml`
 - Edit config.yaml
 - Run with `./episode_organizer`
+
+## Spiffy Badges
+[![Go Report Card](https://goreportcard.com/badge/github.com/josephduchesne/episode_organizer)](https://goreportcard.com/report/github.com/josephduchesne/episode_organizer) 
