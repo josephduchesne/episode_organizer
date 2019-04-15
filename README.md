@@ -22,3 +22,4 @@ This program expects that the series and season folders will exist already. It w
 ## Spiffy Badges
 [![Go Report Card](https://goreportcard.com/badge/github.com/josephduchesne/episode_organizer)](https://goreportcard.com/report/github.com/josephduchesne/episode_organizer) 
 [![Build Status](https://travis-ci.org/josephduchesne/episode_organizer.svg?branch=master)](https://travis-ci.org/josephduchesne/episode_organizer)
+[![Coverage Status](https://coveralls.io/repos/github/josephduchesne/episode_organizer/badge.svg?branch=master)](https://coveralls.io/github/josephduchesne/episode_organizer?branch=master)

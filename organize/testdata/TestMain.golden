@@ -1,9 +1,11 @@
 testdata/tmp_input
+testdata/tmp_input/BadExtension.mov
 testdata/tmp_input/many
 testdata/tmp_input/many/sub
 testdata/tmp_input/many/sub/dirs
 testdata/tmp_input/No_Dest.S07E02.mkv
 testdata/tmp_input/Too.small.S02E01.mp4
+testdata/tmp_input/UnparsableSeries.mkv
 testdata/tmp_output
 testdata/tmp_output/.gitignore
 testdata/tmp_output/Large Enough

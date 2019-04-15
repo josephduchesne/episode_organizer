@@ -18,7 +18,7 @@ type Episode struct {
 }
 
 // MoveEpisode to the destination subfolder, if it exists
-func MoveEpisode(episode Episode, dest string) {
+func MoveEpisode(episode Episode, dest string) error {
 	r := strings.NewReplacer("{Series}", episode.Series,
 		"{Season}", episode.Season,
 		"{Filename}", episode.Filename)
@@ -29,12 +29,15 @@ func MoveEpisode(episode Episode, dest string) {
 		err := os.Rename(episode.Path, destPath)
 		if err != nil {
 			log.Printf("Failed to move %s to %s: %v\n", episode.Path, destPath, err)
+			return err
 		} else {
 			log.Printf("Moved %s to %s\n", episode.Path, destPath)
 		}
 	} else {
 		log.Printf("No destination found for %s\n", destDir)
+		return errors.New("MoveEpisode dest not found!")
 	}
+	return nil
 }
 
 // ParseEpisode turns file path into an Episode struct, or fails and returns an error
@@ -45,10 +48,7 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 	e.Filename = filepath.Base(path)
 
 	// Pull out episode name and season (stripping off leading zeros)
-	r, err := regexp.Compile(`(.+)[sS]0*([\d]+)[eE][\d]+.+`)
-	if err != nil {
-		return e, err
-	}
+	r := regexp.MustCompile(`(.+)[sS]0*([\d]+)[eE][\d]+.+`)
 	res := r.FindStringSubmatch(e.Filename)
 	if len(res) != 3 {
 		return e, errors.New("Failed to find episode name and season")
@@ -68,7 +68,7 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 }
 
 // GetVideoFiles finds all video files that meet the min-size and extension criteria
-func GetVideoFiles(folder string, minSize int64, extensions []string) []string {
+func GetVideoFiles(folder string, minSize int64, extensions []string) ([]string, error) {
 	var videoFiles []string
 	err := filepath.Walk(folder,
 		func(path string, info os.FileInfo, err error) error {
@@ -91,5 +91,5 @@ func GetVideoFiles(folder string, minSize int64, extensions []string) []string {
 	if err != nil {
 		log.Println(err)
 	}
-	return videoFiles
+	return videoFiles, err
 }

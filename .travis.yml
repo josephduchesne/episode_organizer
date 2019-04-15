@@ -2,5 +2,11 @@ language: go
 
 go:
     - "1.12.4"
+before_install:
+    - go get github.com/wadey/gocovmerge
+    - go get github.com/mattn/goveralls
 script:
-        - go test github.com/josephduchesne/episode_organizer/organize github.com/josephduchesne/episode_organizer/config
+    - go test ./config -v -covermode=count -coverprofile=config.cov
+    - go test ./organize -v -covermode=count -coverprofile=organize.cov
+    - gocovmerge `ls *.cov` > merged.coverprofile
+    - $GOPATH/bin/goveralls  -coverprofile merged.coverprofile -service=travis-ci

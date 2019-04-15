@@ -47,3 +47,54 @@ func TestMain(t *testing.T) {
 		t.Fail()
 	}
 }
+
+// TestMainFailConfig checks the case where config fails to load
+func TestMainFailConfig(t *testing.T) {
+	err := organize.Episodes("testdata/invalid_config.yaml")
+	if err == nil {
+		log.Println("Config load should have errored")
+		t.Fail()
+	}
+}
+
+// TestFailedRename checks the case where an episode can't be moved into place
+func TestFailedRename(t *testing.T) {
+	organize.Episodes("testdata/config.yaml")
+	// Then try to move one again
+	episode := organize.Episode{Path: "/tmp/a/very/fake/path", Filename: "Foo", Series: "Real", Season: "1"}
+	err := organize.MoveEpisode(episode, "testdata/tmp_output/")
+	if err == nil {
+		log.Println("TestFailedRename should have errored")
+		t.Fail()
+	}
+}
+
+// TestNoDest checks the case where the target directory doesn't exist
+func TestNoDest(t *testing.T) {
+	organize.Episodes("testdata/config.yaml")
+	// Then try to move one again
+	episode := organize.Episode{Path: "testdata/tmp_input/No_Dest.S07E02.mkv", Filename: "Foo", Series: "Real", Season: "1"}
+	err := organize.MoveEpisode(episode, "/dev/null/fake")
+	if err == nil {
+		log.Println("MoveEpisode should have errored")
+		t.Fail()
+	}
+}
+
+// TestBadSourceFolder tests that errors are handled properly when the source folder is invalid
+func TestBadSourceFolder(t *testing.T) {
+	_, err := organize.GetVideoFiles("/dev/null/fake", 0, []string{"foo"})
+	if err == nil {
+		log.Println("GetVideoFiles should have an error")
+		t.Fail()
+	}
+}
+
+// TestBadSourceConfig tests error handling for a bad source file in a configuration
+func TestBadSourceConfig(t *testing.T) {
+	err := organize.Episodes("testdata/config_bad_source.yaml")
+	if err == nil {
+		log.Println("Episode organization should have failed with a bad source dir")
+		t.Fail()
+	}
+}

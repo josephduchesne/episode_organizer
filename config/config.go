@@ -17,15 +17,17 @@ type Config struct {
 }
 
 // GetConfig loads config.yaml into the Config data structure
-func (c *Config) GetConfig(path string) *Config {
+func (c *Config) GetConfig(path string) error {
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
-		log.Printf("yamlFile.Get err   #%v ", err)
+		log.Printf("yamlFile.Get err %v\n", err)
+		return err
 	}
 	err = yaml.Unmarshal(yamlFile, c)
 	if err != nil {
-		log.Fatalf("Unmarshal: %v", err)
+		log.Printf("Invalid config file! %s\nError: %v\n", path, err)
+		return err
 	}
 
-	return c
+	return nil
 }
