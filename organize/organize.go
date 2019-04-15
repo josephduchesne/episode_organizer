@@ -30,9 +30,8 @@ func MoveEpisode(episode Episode, dest string) error {
 		if err != nil {
 			log.Printf("Failed to move %s to %s: %v\n", episode.Path, destPath, err)
 			return err
-		} else {
-			log.Printf("Moved %s to %s\n", episode.Path, destPath)
 		}
+		log.Printf("Moved %s to %s\n", episode.Path, destPath)
 	} else {
 		log.Printf("No destination found for %s\n", destDir)
 		return errors.New("MoveEpisode dest not found!")
