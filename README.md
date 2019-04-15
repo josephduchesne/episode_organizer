@@ -1,3 +1,10 @@
+### Spiffy Badges
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Go Report Card](https://goreportcard.com/badge/github.com/josephduchesne/episode_organizer)](https://goreportcard.com/report/github.com/josephduchesne/episode_organizer) 
+[![Build Status](https://travis-ci.org/josephduchesne/episode_organizer.svg?branch=master)](https://travis-ci.org/josephduchesne/episode_organizer)
+[![Coverage Status](https://coveralls.io/repos/github/josephduchesne/episode_organizer/badge.svg?branch=master)](https://coveralls.io/github/josephduchesne/episode_organizer?branch=master)
+
+
 # What is this?
 
 This is a small tool to make TV show episode organization easier without risking really messing up your directory structure, file names, or other things.
@@ -18,8 +25,3 @@ This program expects that the series and season folders will exist already. It w
 - Create a config file `wget https://raw.githubusercontent.com/josephduchesne/episode_organizer/master/config.yaml.dist -O config.yaml`
 - Edit config.yaml
 - Run with `./episode_organizer`
-
-## Spiffy Badges
-[![Go Report Card](https://goreportcard.com/badge/github.com/josephduchesne/episode_organizer)](https://goreportcard.com/report/github.com/josephduchesne/episode_organizer) 
-[![Build Status](https://travis-ci.org/josephduchesne/episode_organizer.svg?branch=master)](https://travis-ci.org/josephduchesne/episode_organizer)
-[![Coverage Status](https://coveralls.io/repos/github/josephduchesne/episode_organizer/badge.svg?branch=master)](https://coveralls.io/github/josephduchesne/episode_organizer?branch=master)
