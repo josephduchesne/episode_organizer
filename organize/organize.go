@@ -15,6 +15,7 @@ type Episode struct {
 	Filename string // The filename
 	Series   string // The name of the show
 	Season   string // The season as a non-zero padded string
+    Episode  string // The episode number as a non-zero padded string
 }
 
 // MoveEpisode to the destination subfolder, if it exists
@@ -47,15 +48,16 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 	e.Filename = filepath.Base(path)
 
 	// Pull out episode name and season (stripping off leading zeros)
-	r := regexp.MustCompile(`(.+)[sS]0*([\d]+)[eE][\d]+.+`)
+	r := regexp.MustCompile(`(.+)[sS]0*([\d]+)[eE]0*([\d]+).+`)
 	res := r.FindStringSubmatch(e.Filename)
-	if len(res) != 3 {
+	if len(res) != 4 {
 		return e, errors.New("Failed to find episode name and season")
 	}
 
 	// "." and "_" are spaces, and ToTitle makes each word upper-case-first
 	e.Series = strings.TrimSpace(strings.Title(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(res[1], ".", " "), "_", " "))))
 	e.Season = res[2]
+    e.Episode = res[3]
 
 	// Handle episode alises
 	if val, ok := aliases[e.Series]; ok {

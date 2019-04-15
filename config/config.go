@@ -9,11 +9,12 @@ import (
 // Config mirrors the config.yaml file
 // See config.yaml.dist for a field by field description
 type Config struct {
-	Source     string            `yaml:"source"`
-	Extensions []string          `yaml:"extensions"`
-	Dest       string            `yaml:"dest"`
-	MinSize    int64             `yaml:"min_size"`
-	Aliases    map[string]string `yaml:"aliases"`
+	Source        string            `yaml:"source"`
+	Extensions    []string          `yaml:"extensions"`
+	Dest          string            `yaml:"dest"`
+	MinSize       int64             `yaml:"min_size"`
+	Aliases       map[string]string `yaml:"aliases"`
+	CreateSeasons bool              `yaml:"create_seasons"`
 }
 
 // GetConfig loads config.yaml into the Config data structure

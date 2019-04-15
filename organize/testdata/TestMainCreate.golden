@@ -3,7 +3,6 @@ testdata/tmp_input/BadExtension.mov
 testdata/tmp_input/many
 testdata/tmp_input/many/sub
 testdata/tmp_input/many/sub/dirs
-testdata/tmp_input/No_Dest.S07E01.mkv
 testdata/tmp_input/Too.small.S02E01.mp4
 testdata/tmp_input/UnparsableSeries.mkv
 testdata/tmp_output
@@ -12,6 +11,9 @@ testdata/tmp_output/Large Enough
 testdata/tmp_output/Large Enough/Season 2
 testdata/tmp_output/Large Enough/Season 2/.gitignore
 testdata/tmp_output/Large Enough/Season 2/Large.Enough.s02e02.mp4
+testdata/tmp_output/No Dest
+testdata/tmp_output/No Dest/Season 7
+testdata/tmp_output/No Dest/Season 7/No_Dest.S07E01.mkv
 testdata/tmp_output/Real
 testdata/tmp_output/Real/Season 1
 testdata/tmp_output/Real/Season 1/ALIAS.S01E03.mp4
