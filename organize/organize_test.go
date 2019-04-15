@@ -112,10 +112,10 @@ func TestBadSourceConfig(t *testing.T) {
 }
 
 var episodeTests = []struct {
-	in  string
+	in    string
 	alias map[string]string
-	err bool
-	out organize.Episode
+	err   bool
+	out   organize.Episode
 }{
 	{
 		"/foo/bar/show.S01E02.mkv",
@@ -141,19 +141,19 @@ var episodeTests = []struct {
 func TestParseEpisode(t *testing.T) {
 	for _, test := range episodeTests {
 		episode, err := organize.ParseEpisode(test.in, test.alias)
-		if test.err {  // test should fail
-			if err == nil {  // we should have errored but didn't
+		if test.err { // test should fail
+			if err == nil { // we should have errored but didn't
 				log.Printf("ParseEpisode Should have errored: %v but got %v,%v\n", test, episode, err)
 				t.Fail()
 			}
 			// Implicitly pass, we failed as expected
 			log.Printf("ParseEpisode errored as anticipated for %v: %v\n", test, err)
-		} else {  // Regular test, should succeed
+		} else { // Regular test, should succeed
 			if err != nil { //error
 				log.Printf("ParseEpisode Should not have errored: %v but got %v,%v\n", test, episode, err)
 				t.Fail()
 			}
-			if episode != episode {  // mismatch
+			if episode != episode { // mismatch
 				log.Printf("ParseEpisode Should match: %v but got %v,%v\n", test, episode, err)
 				t.Fail()
 			}

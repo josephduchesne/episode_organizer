@@ -15,7 +15,7 @@ type Episode struct {
 	Filename string // The filename
 	Series   string // The name of the show
 	Season   string // The season as a non-zero padded string
-    Episode  string // The episode number as a non-zero padded string
+	Episode  string // The episode number as a non-zero padded string
 }
 
 // MoveEpisode to the destination subfolder, if it exists
@@ -26,17 +26,17 @@ func MoveEpisode(episode Episode, dest string, createSeasons bool) error {
 	destPath := r.Replace(dest)
 	destDir := filepath.Dir(destPath)
 
-    // Handle creating seasons folder, if enabled
-    if createSeasons && episode.Episode == "1" {
-        // If the season doesn't exist
-        if _, err := os.Stat(destDir); os.IsNotExist(err) {
-            // But the series does
-            if _, err := os.Stat(filepath.Dir(destDir)); !os.IsNotExist(err) {
-                log.Printf("Creating season directory for %s: %s\n", episode.Filename, destDir)
-                os.Mkdir(destDir, 0777)
-            }
-        }
-    }
+	// Handle creating seasons folder, if enabled
+	if createSeasons && episode.Episode == "1" {
+		// If the season doesn't exist
+		if _, err := os.Stat(destDir); os.IsNotExist(err) {
+			// But the series does
+			if _, err := os.Stat(filepath.Dir(destDir)); !os.IsNotExist(err) {
+				log.Printf("Creating season directory for %s: %s\n", episode.Filename, destDir)
+				os.Mkdir(destDir, 0777)
+			}
+		}
+	}
 
 	if _, err := os.Stat(destDir); !os.IsNotExist(err) {
 		err := os.Rename(episode.Path, destPath)
@@ -69,7 +69,7 @@ func ParseEpisode(path string, aliases map[string]string) (Episode, error) {
 	// "." and "_" are spaces, and ToTitle makes each word upper-case-first
 	e.Series = strings.TrimSpace(strings.Title(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(res[1], ".", " "), "_", " "))))
 	e.Season = res[2]
-    e.Episode = res[3]
+	e.Episode = res[3]
 
 	// Handle episode alises
 	if val, ok := aliases[e.Series]; ok {
