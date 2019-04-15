@@ -14,10 +14,11 @@ import (
 // To update the test's expected output, run `go test -update`
 var update = flag.Bool("update", false, "update .golden files")
 
-// TestMain is an end-to-end test that validates general functionality of episode_organizer
+// runEndToEnd is a test runner that validates general functionality of episode_organizer
 // It copies intput/output directories in testdata to tmp_input/tmp_output, runs
 // and then compares the result
-func TestMain(t *testing.T) {
+
+func runEndToEnd(t *testing.T, configFile string) {
 	// End-to-end functional test of the main program
 
 	// reset test and copy in new test data
@@ -26,7 +27,7 @@ func TestMain(t *testing.T) {
 	exec.Command("cp", "-a", "testdata/output/", "testdata/tmp_output").Run()
 
 	// Run the main program
-	organize.Episodes("testdata/config.yaml")
+	organize.Episodes(configFile)
 
 	// Check the results (with optional update flag)
 	actual, err := exec.Command("sh", "-c", "find testdata/tmp_input testdata/tmp_output | sort").CombinedOutput()
@@ -46,6 +47,17 @@ func TestMain(t *testing.T) {
 		log.Printf("Actual:\n%s\n\n", actual)
 		t.Fail()
 	}
+
+}
+
+// End-to-end test without folder creation
+func TestMain(t *testing.T) {
+	runEndToEnd(t, "testdata/config.yaml")
+}
+
+// End-to-end test without folder creation
+func TestMainCreate(t *testing.T) {
+	runEndToEnd(t, "testdata/config.create.yaml")
 }
 
 // TestMainFailConfig checks the case where config fails to load
@@ -62,7 +74,7 @@ func TestFailedRename(t *testing.T) {
 	organize.Episodes("testdata/config.yaml")
 	// Then try to move one again
 	episode := organize.Episode{Path: "/tmp/a/very/fake/path", Filename: "Foo", Series: "Real", Season: "1"}
-	err := organize.MoveEpisode(episode, "testdata/tmp_output/")
+	err := organize.MoveEpisode(episode, "testdata/tmp_output/", false)
 	if err == nil {
 		log.Println("TestFailedRename should have errored")
 		t.Fail()
@@ -74,7 +86,7 @@ func TestNoDest(t *testing.T) {
 	organize.Episodes("testdata/config.yaml")
 	// Then try to move one again
 	episode := organize.Episode{Path: "testdata/tmp_input/No_Dest.S07E02.mkv", Filename: "Foo", Series: "Real", Season: "1"}
-	err := organize.MoveEpisode(episode, "/dev/null/fake")
+	err := organize.MoveEpisode(episode, "/dev/null/fake", false)
 	if err == nil {
 		log.Println("MoveEpisode should have errored")
 		t.Fail()
@@ -96,5 +108,56 @@ func TestBadSourceConfig(t *testing.T) {
 	if err == nil {
 		log.Println("Episode organization should have failed with a bad source dir")
 		t.Fail()
+	}
+}
+
+var episodeTests = []struct {
+	in    string
+	alias map[string]string
+	err   bool
+	out   organize.Episode
+}{
+	{
+		"/foo/bar/show.S01E02.mkv",
+		map[string]string{},
+		false,
+		organize.Episode{"/foo/bar/show.S01E02.mkv", "show.S01E02.mkv", "Show", "1", "2"},
+	},
+	{
+		"/foo/bar/SHOW.s99E102.mkv",
+		map[string]string{},
+		false,
+		organize.Episode{"/foo/bar/SHOW.s99E102.mkv", "SHOW.s99E102.mkv", "Show", "99", "102"},
+	},
+	{
+		"/foo/bar/SHOWwithinvalidname.mkv",
+		map[string]string{},
+		true,
+		organize.Episode{},
+	},
+}
+
+// TestParseEpisode walks through episodeTests, validing each parse
+func TestParseEpisode(t *testing.T) {
+	for _, test := range episodeTests {
+		episode, err := organize.ParseEpisode(test.in, test.alias)
+		if test.err { // test should fail
+			if err == nil { // we should have errored but didn't
+				log.Printf("ParseEpisode Should have errored: %v but got %v,%v\n", test, episode, err)
+				t.Fail()
+			}
+			// Implicitly pass, we failed as expected
+			log.Printf("ParseEpisode errored as anticipated for %v: %v\n", test, err)
+		} else { // Regular test, should succeed
+			if err != nil { //error
+				log.Printf("ParseEpisode Should not have errored: %v but got %v,%v\n", test, episode, err)
+				t.Fail()
+			}
+			if episode != episode { // mismatch
+				log.Printf("ParseEpisode Should match: %v but got %v,%v\n", test, episode, err)
+				t.Fail()
+			}
+			log.Printf("ParseEpisode Matched Expectations: %v and got %v,%v\n", test, episode, err)
+		}
 	}
 }

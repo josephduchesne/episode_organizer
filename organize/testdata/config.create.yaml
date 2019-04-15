@@ -7,4 +7,4 @@ aliases:
     "Alias": "Real"
 dest: testdata/tmp_output/{Series}/Season {Season}/{Filename}
 min_size: 1  # Video files must be 1 byte
-create_seasons: False
+create_seasons: True

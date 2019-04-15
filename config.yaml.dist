@@ -7,3 +7,4 @@ min_size: 10485760  # Video files must be >= this many bytes
 aliases:  # A map translating TV show names into their canonical version (found in the output folder)
   "A TV Show With A Very Long Name": "Short Name"  # input: output
 dest: /home/user/Videos/TV/{Series}/Season {Season}/{Filename}  # The destination folder structure
+create_seasons: True  # Will create a new seasons directory, but only for S##E01, not any subsequent ones

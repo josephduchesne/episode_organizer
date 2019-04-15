@@ -7,3 +7,4 @@ aliases:
   "Baz": "Bash"
 dest: /some/dest
 min_size: 123
+create_seasons: True

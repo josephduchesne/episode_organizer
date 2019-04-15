@@ -13,11 +13,12 @@ func TestGetConfig(t *testing.T) {
 	input.GetConfig("testdata/config.yaml")
 
 	expected := config.Config{
-		Source:     "/some/source",
-		Extensions: []string{"A", "B"},
-		Aliases:    map[string]string{"Foo": "Bar", "Baz": "Bash"},
-		Dest:       "/some/dest",
-		MinSize:    123,
+		Source:        "/some/source",
+		Extensions:    []string{"A", "B"},
+		Aliases:       map[string]string{"Foo": "Bar", "Baz": "Bash"},
+		Dest:          "/some/dest",
+		MinSize:       123,
+		CreateSeasons: true,
 	}
 	if reflect.DeepEqual(input, expected) {
 		fmt.Println("Configuration loaded as expected")
