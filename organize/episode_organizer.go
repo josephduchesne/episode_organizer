@@ -27,7 +27,7 @@ func Episodes(configFile string) error {
 		if err != nil {
 			log.Printf("Error parsing episode %s: %v", file, err)
 		} else {
-			MoveEpisode(episode, c.Dest)
+			MoveEpisode(episode, c.Dest, c.CreateSeasons)
 		}
 	}
 	return nil

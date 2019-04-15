@@ -12,6 +12,7 @@ testdata/tmp_output/Large Enough/Season 2
 testdata/tmp_output/Large Enough/Season 2/.gitignore
 testdata/tmp_output/Large Enough/Season 2/Large.Enough.s02e02.mp4
 testdata/tmp_output/No Dest
+testdata/tmp_output/No Dest/.gitignore
 testdata/tmp_output/No Dest/Season 7
 testdata/tmp_output/No Dest/Season 7/No_Dest.S07E01.mkv
 testdata/tmp_output/Real

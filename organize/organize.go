@@ -19,12 +19,24 @@ type Episode struct {
 }
 
 // MoveEpisode to the destination subfolder, if it exists
-func MoveEpisode(episode Episode, dest string) error {
+func MoveEpisode(episode Episode, dest string, createSeasons bool) error {
 	r := strings.NewReplacer("{Series}", episode.Series,
 		"{Season}", episode.Season,
 		"{Filename}", episode.Filename)
 	destPath := r.Replace(dest)
 	destDir := filepath.Dir(destPath)
+
+    // Handle creating seasons folder, if enabled
+    if createSeasons && episode.Episode == "1" {
+        // If the season doesn't exist
+        if _, err := os.Stat(destDir); os.IsNotExist(err) {
+            // But the series does
+            if _, err := os.Stat(filepath.Dir(destDir)); !os.IsNotExist(err) {
+                log.Printf("Creating season directory for %s: %s\n", episode.Filename, destDir)
+                os.Mkdir(destDir, 0777)
+            }
+        }
+    }
 
 	if _, err := os.Stat(destDir); !os.IsNotExist(err) {
 		err := os.Rename(episode.Path, destPath)

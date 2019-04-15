@@ -74,7 +74,7 @@ func TestFailedRename(t *testing.T) {
 	organize.Episodes("testdata/config.yaml")
 	// Then try to move one again
 	episode := organize.Episode{Path: "/tmp/a/very/fake/path", Filename: "Foo", Series: "Real", Season: "1"}
-	err := organize.MoveEpisode(episode, "testdata/tmp_output/")
+	err := organize.MoveEpisode(episode, "testdata/tmp_output/", false)
 	if err == nil {
 		log.Println("TestFailedRename should have errored")
 		t.Fail()
@@ -86,7 +86,7 @@ func TestNoDest(t *testing.T) {
 	organize.Episodes("testdata/config.yaml")
 	// Then try to move one again
 	episode := organize.Episode{Path: "testdata/tmp_input/No_Dest.S07E02.mkv", Filename: "Foo", Series: "Real", Season: "1"}
-	err := organize.MoveEpisode(episode, "/dev/null/fake")
+	err := organize.MoveEpisode(episode, "/dev/null/fake", false)
 	if err == nil {
 		log.Println("MoveEpisode should have errored")
 		t.Fail()
