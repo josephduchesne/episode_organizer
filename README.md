@@ -1,4 +1,3 @@
-### Spiffy Badges
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Go Report Card](https://goreportcard.com/badge/github.com/josephduchesne/episode_organizer)](https://goreportcard.com/report/github.com/josephduchesne/episode_organizer) 
 [![Build Status](https://travis-ci.org/josephduchesne/episode_organizer.svg?branch=master)](https://travis-ci.org/josephduchesne/episode_organizer)
